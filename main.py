@@ -2,9 +2,18 @@ import random, time
 import tabulate
 
 
-def qsort(a, pivot_fn):
+def qsort(a, pivot_fn=None):
     ## TO DO
-    pass
+  if len(a)<=1:
+    return a
+  else:
+    if pivot_fn != None:
+      pivot_fn = a[0]
+      
+    less = [x for x in a[1:] if x <= pivot_fn]
+    greater = [x for x in a[1:] if x > pivot_fn]
+    return qsort(less, pivot_fn) + [pivot] + q(greater, pivot_fn)
+   
     
 def time_search(sort_fn, mylist):
     """
@@ -30,32 +39,28 @@ def time_search(sort_fn, mylist):
     ###
 
 def compare_sort(sizes=[100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000]):
-    """
-    Compare the running time of different sorting algorithms.
-
-    Returns:
-      A list of tuples of the form
-      (n, linear_search_time, binary_search_time)
-      indicating the number of milliseconds it takes
-      for each method to run on each value of n
-    """
-    ### TODO - sorting algorithms for comparison
-    qsort_fixed_pivot = # 
-    qsort_random_pivot = #
-    tim_sort = #
-    result = []
-    for size in sizes:
-        # create list in ascending order
-        mylist = list(range(size))
-        # shuffles list if needed
-        #random.shuffle(mylist)
-        result.append([
-            len(mylist),
-            time_search(qsort_fixed_pivot, mylist),
-            time_search(qsort_random_pivot, mylist),
+  qsort_fixed_pivot = qsort(sizes,"teehee")
+  qsort_random_pivot = qsort(sizes)
+  result = []
+  for size in sizes:
+    # create list in ascending order
+    mylist = list(range(size))
+    # shuffles list if needed
+    random.shuffle(mylist)
+    result.append([
+    len(mylist),
+        time_search(qsort_fixed_pivot, mylist),
+        time_search(qsort_random_pivot, mylist),
+        
         ])
     return result
     ###
+def ssort(L):
+  for i in range(len(L)):
+    print(L)
+    m = L.index(min(L[i:]))
+    L[i], L[m] = L[m], L[i]
+  return L
 
 def print_results(results):
     """ change as needed for comparisons """
